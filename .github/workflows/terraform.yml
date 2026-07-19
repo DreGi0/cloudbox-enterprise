@@ -30,5 +30,14 @@ jobs:
         run: terraform validate
       - name: Terraform plan
         run: terraform plan -lock=false -var="aws_region=us-east-1" -var="project_name=cloudbox-enterprise"
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
       - name: Terraform apply
         run: terraform apply -auto-approve -lock=false -var="aws_region=us-east-1" -var="project_name=cloudbox-enterprise"
