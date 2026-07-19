@@ -1,7 +1,7 @@
-resource "aws_api_gateway_rest_api" "files_api" { 
- name = "FilesAPI" 
- description = "API REST para gestión de archivos" 
-} 
+resource "aws_api_gateway_rest_api" "files_api" {
+  name        = "FilesAPI"
+  description = "API REST para gestión de archivos"
+}
 resource "aws_api_gateway_authorizer" "cognito" {
   name            = "CognitoAuthorizer"
   rest_api_id     = aws_api_gateway_rest_api.files_api.id
@@ -9,62 +9,62 @@ resource "aws_api_gateway_authorizer" "cognito" {
   provider_arns   = [var.cognito_user_pool_arn]
   identity_source = "method.request.header.Authorization"
 }
-resource "aws_api_gateway_resource" "v1" { 
- rest_api_id = aws_api_gateway_rest_api.files_api.id 
- parent_id = aws_api_gateway_rest_api.files_api.root_resource_id 
- path_part = "v1" 
-} 
-resource "aws_api_gateway_resource" "files" { 
- rest_api_id = aws_api_gateway_rest_api.files_api.id 
- parent_id = aws_api_gateway_resource.v1.id 
- path_part = "files" 
-} 
-resource "aws_api_gateway_resource" "file_id" { 
- rest_api_id = aws_api_gateway_rest_api.files_api.id 
- parent_id = aws_api_gateway_resource.files.id 
- path_part = "{id}" 
-} 
-resource "aws_api_gateway_method" "post_files" { 
- rest_api_id = aws_api_gateway_rest_api.files_api.id 
- resource_id = aws_api_gateway_resource.files.id 
- http_method = "POST" 
- authorization = "COGNITO_USER_POOLS" 
- authorizer_id    = aws_api_gateway_authorizer.cognito.id
- api_key_required = true 
-} 
-resource "aws_api_gateway_method" "get_files" { 
- rest_api_id = aws_api_gateway_rest_api.files_api.id 
- resource_id = aws_api_gateway_resource.files.id 
- http_method = "GET" 
- authorization = "COGNITO_USER_POOLS" 
- authorizer_id    = aws_api_gateway_authorizer.cognito.id
- api_key_required = true 
-} 
-resource "aws_api_gateway_method" "get_file_by_id" { 
- rest_api_id = aws_api_gateway_rest_api.files_api.id 
- resource_id = aws_api_gateway_resource.file_id.id 
- http_method = "GET" 
- authorization = "COGNITO_USER_POOLS"
- authorizer_id    = aws_api_gateway_authorizer.cognito.id
- api_key_required = true 
-} 
-resource "aws_api_gateway_method" "update_file" { 
- 
- rest_api_id = aws_api_gateway_rest_api.files_api.id 
- resource_id = aws_api_gateway_resource.file_id.id 
- http_method = "PUT" 
- authorization = "COGNITO_USER_POOLS" 
- authorizer_id    = aws_api_gateway_authorizer.cognito.id
- api_key_required = true 
-} 
-resource "aws_api_gateway_method" "delete_file" { 
- rest_api_id = aws_api_gateway_rest_api.files_api.id 
- resource_id = aws_api_gateway_resource.file_id.id 
- http_method = "DELETE" 
- authorization = "COGNITO_USER_POOLS" 
- authorizer_id    = aws_api_gateway_authorizer.cognito.id
- api_key_required = true 
-} 
+resource "aws_api_gateway_resource" "v1" {
+  rest_api_id = aws_api_gateway_rest_api.files_api.id
+  parent_id   = aws_api_gateway_rest_api.files_api.root_resource_id
+  path_part   = "v1"
+}
+resource "aws_api_gateway_resource" "files" {
+  rest_api_id = aws_api_gateway_rest_api.files_api.id
+  parent_id   = aws_api_gateway_resource.v1.id
+  path_part   = "files"
+}
+resource "aws_api_gateway_resource" "file_id" {
+  rest_api_id = aws_api_gateway_rest_api.files_api.id
+  parent_id   = aws_api_gateway_resource.files.id
+  path_part   = "{id}"
+}
+resource "aws_api_gateway_method" "post_files" {
+  rest_api_id      = aws_api_gateway_rest_api.files_api.id
+  resource_id      = aws_api_gateway_resource.files.id
+  http_method      = "POST"
+  authorization    = "COGNITO_USER_POOLS"
+  authorizer_id    = aws_api_gateway_authorizer.cognito.id
+  api_key_required = true
+}
+resource "aws_api_gateway_method" "get_files" {
+  rest_api_id      = aws_api_gateway_rest_api.files_api.id
+  resource_id      = aws_api_gateway_resource.files.id
+  http_method      = "GET"
+  authorization    = "COGNITO_USER_POOLS"
+  authorizer_id    = aws_api_gateway_authorizer.cognito.id
+  api_key_required = true
+}
+resource "aws_api_gateway_method" "get_file_by_id" {
+  rest_api_id      = aws_api_gateway_rest_api.files_api.id
+  resource_id      = aws_api_gateway_resource.file_id.id
+  http_method      = "GET"
+  authorization    = "COGNITO_USER_POOLS"
+  authorizer_id    = aws_api_gateway_authorizer.cognito.id
+  api_key_required = true
+}
+resource "aws_api_gateway_method" "update_file" {
+
+  rest_api_id      = aws_api_gateway_rest_api.files_api.id
+  resource_id      = aws_api_gateway_resource.file_id.id
+  http_method      = "PUT"
+  authorization    = "COGNITO_USER_POOLS"
+  authorizer_id    = aws_api_gateway_authorizer.cognito.id
+  api_key_required = true
+}
+resource "aws_api_gateway_method" "delete_file" {
+  rest_api_id      = aws_api_gateway_rest_api.files_api.id
+  resource_id      = aws_api_gateway_resource.file_id.id
+  http_method      = "DELETE"
+  authorization    = "COGNITO_USER_POOLS"
+  authorizer_id    = aws_api_gateway_authorizer.cognito.id
+  api_key_required = true
+}
 resource "aws_api_gateway_integration" "create_file" {
   rest_api_id             = aws_api_gateway_rest_api.files_api.id
   resource_id             = aws_api_gateway_resource.files.id
@@ -156,16 +156,16 @@ resource "aws_api_gateway_deployment" "deployment" {
   rest_api_id = aws_api_gateway_rest_api.files_api.id
 
   depends_on = [
-  aws_api_gateway_integration.create_file,
-  aws_api_gateway_integration.get_files,
-  aws_api_gateway_integration.get_file_by_id,
-  aws_api_gateway_integration.update_file,
-  aws_api_gateway_integration.delete_file,
-  aws_api_gateway_integration.options_files,
-  aws_api_gateway_integration.options_file_id
-]
+    aws_api_gateway_integration.create_file,
+    aws_api_gateway_integration.get_files,
+    aws_api_gateway_integration.get_file_by_id,
+    aws_api_gateway_integration.update_file,
+    aws_api_gateway_integration.delete_file,
+    aws_api_gateway_integration.options_files,
+    aws_api_gateway_integration.options_file_id
+  ]
 
-triggers = {
+  triggers = {
     redeployment = sha1(jsonencode([
       aws_api_gateway_integration.create_file,
       aws_api_gateway_integration_response.options_files,

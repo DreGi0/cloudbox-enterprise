@@ -1,6 +1,6 @@
-output "create_file_lambda_arn" { 
- value = aws_lambda_function.create_file.arn 
-} 
+output "create_file_lambda_arn" {
+  value = aws_lambda_function.create_file.arn
+}
 output "get_files_lambda_arn" {
   value = aws_lambda_function.get_files.arn
 }

@@ -13,11 +13,11 @@ output "region" {
 output "dynamodb_table" {
   value = "Files"
 }
-output "documents_queue_url" { 
-value = aws_sqs_queue.documents_queue.id 
+output "documents_queue_url" {
+  value = aws_sqs_queue.documents_queue.id
 }
-output "documents_queue_arn" { 
-value = aws_sqs_queue.documents_queue.arn 
+output "documents_queue_arn" {
+  value = aws_sqs_queue.documents_queue.arn
 }
 output "frontend_url" {
   value = module.frontend.frontend_url

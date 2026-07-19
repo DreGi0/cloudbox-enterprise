@@ -82,6 +82,6 @@ resource "aws_lambda_function" "delete_file" {
   handler          = "index.handler"
   role             = var.lambda_role_arn
 
-  
+
 }
 

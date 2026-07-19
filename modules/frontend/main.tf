@@ -120,7 +120,7 @@ resource "aws_cloudfront_distribution" "frontend" {
 
     custom_origin_config {
       http_port              = 80
-      https_port              = 443
+      https_port             = 443
       origin_protocol_policy = "http-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
@@ -128,7 +128,7 @@ resource "aws_cloudfront_distribution" "frontend" {
 
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD"]
-    cached_methods          = ["GET", "HEAD"]
+    cached_methods         = ["GET", "HEAD"]
     target_origin_id       = "frontend-origin"
     viewer_protocol_policy = "redirect-to-https"
 

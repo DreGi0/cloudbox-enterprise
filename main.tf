@@ -6,14 +6,14 @@ module "cognito" {
   source = "./modules/cognito"
 }
 module "iam" {
-  source = "./modules/iam"
-  sqs_queue_arn = aws_sqs_queue.documents_queue.arn
+  source             = "./modules/iam"
+  sqs_queue_arn      = aws_sqs_queue.documents_queue.arn
   dynamodb_table_arn = module.dynamodb.table_arn
 }
 module "lambda" {
   source          = "./modules/lambda"
   lambda_role_arn = module.iam.lambda_role_arn
-  queue_url = aws_sqs_queue.documents_queue.id 
+  queue_url       = aws_sqs_queue.documents_queue.id
 }
 module "apigateway" {
   source = "./modules/apigateway"
