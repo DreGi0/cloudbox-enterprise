@@ -29,6 +29,6 @@ jobs:
       - name: Terraform validate
         run: terraform validate
       - name: Terraform plan
-        run: terraform plan -var="aws_region=us-east-1" -var="project_name=cloudbox-enterprise"
+        run: terraform plan -lock=false -var="aws_region=us-east-1" -var="project_name=cloudbox-enterprise"
       - name: Terraform apply
-        run: terraform apply -auto-approve -var="aws_region=us-east-1" -var="project_name=cloudbox-enterprise"
+        run: terraform apply -auto-approve -lock=false -var="aws_region=us-east-1" -var="project_name=cloudbox-enterprise"
